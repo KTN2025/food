@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KTN Seafood</title>
+<meta name="theme-color" content="#0b3954">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="KTN Seafood">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+html,body{margin:0;height:100%;background:#0b3954;color:#fff;font-family:system-ui,sans-serif}
+body{display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
+#msg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;line-height:1.6}
+iframe{position:relative;z-index:1;flex:1;width:100%;border:0;background:#f4f8fa}
+</style>
+</head>
+<body>
+<div id="msg">กำลังเปิด KTN Seafood…</div>
+<iframe id="app" title="KTN Seafood Order" allow="clipboard-write" hidden></iframe>
+
+<script>
+/* ====== แก้บรรทัดนี้บรรทัดเดียว: วางลิงก์ Web app ของ Apps Script (ลงท้ายด้วย /exec) ====== */
+var APP_URL = 'https://script.google.com/macros/s/AKfycbxijK6X5x1OR8ReMiIWKdOXrTnghDywJiJd2ib3UQgfj0Rix5kM8ynt-oLuUvoGTZe_QQ/exec';
+/* ============================================================================= */
+
+(function () {
+  var msg = document.getElementById('msg');
+  var f = document.getElementById('app');
+  if (!/^https:\/\/script\.google\.com\/.+\/exec/.test(APP_URL)) {
+    msg.innerHTML = 'ยังไม่ได้ตั้งลิงก์แอพ<br>เปิดไฟล์ index.html แล้วแก้ APP_URL ให้เป็นลิงก์ที่ลงท้ายด้วย /exec';
+    return;
+  }
+  f.onload = function () { msg.style.display = 'none'; };
+  f.hidden = false;
+  f.src = APP_URL;
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  }
+})();
+</script>
+</body>
+</html>
